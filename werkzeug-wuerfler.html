@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Werkzeug-Würfler</title>
+  <style>
+    body {
+      background-image: url('https://www.publicdomainpictures.net/pictures/270000/velka/wood-background.jpg');
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+      padding-top: 50px;
+      display: none;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin-bottom: 30px;
+    }
+
+    #result {
+      font-size: 2em;
+      margin-top: 20px;
+    }
+
+    #tool-image {
+      width: 200px;
+      height: 200px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 1.5em;
+      background-color: #8B4513;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    button:hover {
+      background-color: #A0522D;
+    }
+
+    #password-prompt {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0,0,0,0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #password-box {
+      background: #444;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    #password-box input {
+      padding: 10px;
+      font-size: 1.2em;
+      border-radius: 5px;
+      border: none;
+      margin-top: 10px;
+      margin-bottom: 20px;
+      width: 80%;
+    }
+  </style>
+</head>
+<body>
+  <div id="password-prompt">
+    <div id="password-box">
+      <h2>Passwort eingeben</h2>
+      <input type="password" id="password-input" placeholder="Passwort">
+      <br>
+      <button onclick="checkPassword()">Einloggen</button>
+      <p id="error-msg" style="color: red; display: none;">Falsches Passwort!</p>
+    </div>
+  </div>
+
+  <h1>Werkzeug-Würfler</h1>
+  <button onclick="rollDice()">Würfeln</button>
+  <div id="result"></div>
+  <img id="tool-image" src="" alt="Werkzeug" style="display:none;">
+
+  <script>
+    const toolImages = {
+      1: 'https://upload.wikimedia.org/wikipedia/commons/4/48/Hammer_icon.png',
+      2: 'https://upload.wikimedia.org/wikipedia/commons/d/d6/Screwdriver_icon.png',
+      3: 'https://upload.wikimedia.org/wikipedia/commons/8/8f/Wrench_icon.png',
+      4: 'https://upload.wikimedia.org/wikipedia/commons/e/e9/Saw_icon.png',
+      5: 'https://upload.wikimedia.org/wikipedia/commons/4/4f/Pliers_icon.png',
+      6: 'https://upload.wikimedia.org/wikipedia/commons/5/5e/Toolbox_icon.png',
+      7: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Drill_icon.png',
+      8: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Tape_measure_icon.png',
+      9: 'https://upload.wikimedia.org/wikipedia/commons/c/cb/Axe_icon.png',
+      10: 'https://upload.wikimedia.org/wikipedia/commons/f/fd/Chainsaw_icon.png'
+    };
+
+    const weightedNumbers = [
+      1,1,1,1,1,1,1,1,
+      2,2,2,2,2,2,
+      3,3,3,3,
+      4,4,4,
+      5,5,
+      6,6,
+      7,
+      8,
+      9,
+      10
+    ];
+
+    function rollDice() {
+      const randomIndex = Math.floor(Math.random() * weightedNumbers.length);
+      const number = weightedNumbers[randomIndex];
+
+      document.getElementById('result').innerText = `Du hast eine ${number} gewürfelt!`;
+      document.getElementById('tool-image').src = toolImages[number];
+      document.getElementById('tool-image').style.display = 'block';
+    }
+
+    function checkPassword() {
+      const input = document.getElementById('password-input').value;
+      if (input === 'CR7') {
+        document.getElementById('password-prompt').style.display = 'none';
+        document.body.style.display = 'block';
+      } else {
+        document.getElementById('error-msg').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
